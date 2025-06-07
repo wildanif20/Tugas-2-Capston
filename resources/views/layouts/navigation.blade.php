@@ -14,10 +14,23 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">                    
+                    @if (auth()->user()->role !== 'job_seeker')
+                    <x-nav-link :href="route('dashboard_index_employers')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('list_employers.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Employers') }}
+                    </x-nav-link>
+                    @endif
+                    @if (auth()->user()->role !== 'employer')
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('list_seekers.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Job Seekers') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 

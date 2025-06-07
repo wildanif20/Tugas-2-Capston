@@ -64,6 +64,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'employers' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Employers::class,
+        ],
+        'job_seekers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Job_seekers::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -94,6 +102,18 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'employers' => [
+        'provider' => 'employers',
+        'table' => 'employer_password_resets',
+        'expire' => 60,
+        'throttle' => 60,
+        ],
+        'job_seekers' => [
+            'provider' => 'job_seekers',
+            'table' => 'job_seeker_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

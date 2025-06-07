@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployersDanJobSeekers;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -22,6 +23,11 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
+    Route::get('admin', [AuthenticatedSessionController::class, 'create'])
+                ->name('admin');
+
+    Route::post('admin', [AuthenticatedSessionController::class, 'store']);
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
 
@@ -33,6 +39,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+                
 });
 
 Route::middleware('auth')->group(function () {
@@ -56,4 +63,24 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+
+    Route::post('register-job', [EmployersDanJobSeekers::class, 'store'])->name('register-job');
+
+    // Route::get('register-job', [RegisteredUserController::class, 'create'])
+    //             ->name('register-job');
+
+
+    // buat route untuk menampilkan data employer#
+    Route::get('/dashboard/{id}', [EmployersDanJobSeekers::class, 'show_employer'])->name('show_employer.show');
+
+    Route::get('/list_seekers', [EmployersDanJobSeekers::class, 'index'])->name('list_seekers.index');
+    Route::get('/list_employers', [EmployersDanJobSeekers::class, 'index_employers'])->name('list_employers.index');
+
+    Route::get('/dashboard', [EmployersDanJobSeekers::class, 'index'])->name('dashboard');
+
+    Route::get('/dashboard_index_employers', [EmployersDanJobSeekers::class, 'index_employers'])->name('dashboard_index_employers');   
+    
+    Route::get('/list_seekers/update', [EmployersDanJobSeekers::class, 'update'])->name('list_seekers.update');
+    
 });
